@@ -54,6 +54,12 @@ public class MainActivity extends Activity {
         mAPIService = ApiUtils.getAPIService();
     }
 
+    @Override
+    protected void onStart(){
+        super.onStart();
+
+    }
+
     @OnClick (R.id.btn_submit)
     public void btn_submit(View view){
         String stockName = titleEt.getText().toString().trim();
@@ -101,7 +107,7 @@ public class MainActivity extends Activity {
 
     public void setData() {
         Log.wtf("SET","Data");
-        mAPIService.setData(new FooRequest("NOT","VALID")).enqueue(new Callback<Post>() {
+        mAPIService.setData(new FooRequest("78","TSLA")).enqueue(new Callback<Post>() {
             @Override
             public void onResponse(Call<Post> call, Response<Post> response) {
 
@@ -121,25 +127,6 @@ public class MainActivity extends Activity {
     public void buyPost(String stockName, String amount) {
         Log.wtf("SET","Data");
         mAPIService.buyPost(new FooRequest(amount, stockName)).enqueue(new Callback<Post>() {
-            @Override
-            public void onResponse(Call<Post> call, Response<Post> response) {
-
-                if(response.isSuccessful()) {
-                    showResponse(response.body().toString());
-                    Log.i(TAG, "post submitted to API set." + response.body().toString());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Post> call, Throwable t) {
-                Log.e(TAG, "Unable to submit post to AP setI.");
-            }
-        });
-    }
-
-    public void canBuyPost(String stockName, String amount) {
-        Log.wtf("SET","Data");
-        mAPIService.canBuyPost(new FooRequest(amount, stockName)).enqueue(new Callback<Post>() {
             @Override
             public void onResponse(Call<Post> call, Response<Post> response) {
 
@@ -194,6 +181,25 @@ public class MainActivity extends Activity {
         });
     }
 
+    public void canBuyPost(String stockName, String amount) {
+        Log.wtf("Stockname",""+stockName);
+        mAPIService.canBuyPost(new FooRequest(amount, stockName)).enqueue(new Callback<Post>() {
+            @Override
+            public void onResponse(Call<Post> call, Response<Post> response) {
+
+                if(response.isSuccessful()) {
+                    showResponse(response.body().toString());
+                    Log.i(TAG, "post submitted to API." + response.body().toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Post> call, Throwable t) {
+                Log.e(TAG, "Unable to submit post to API.");
+            }
+        });
+    }
+
     public void setPost(String amount) {
         Log.wtf("SET","FUNDS");
         mAPIService.setPost(new FooRequestSet(amount)).enqueue(new Callback<Post>() {
@@ -218,12 +224,6 @@ public class MainActivity extends Activity {
             mResponseTv.setVisibility(View.VISIBLE);
         }
         mResponseTv.setText(response);
-    }
-
-
-    @Override
-    protected void onStart(){
-        super.onStart();
     }
 
     @OnClick(R.id.requestO)
