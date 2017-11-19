@@ -2,7 +2,10 @@ package tech.disruptfin.wackhestern.disruptfintech;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -37,23 +40,32 @@ public class MainActivity extends Activity {
     @BindView(R.id.et_title) EditText titleEt;
     @BindView(R.id.et_body) EditText bodyEt;
     @BindView(R.id.ticket) TextView ticketed;
+    @BindView(R.id.name) TextView named;
+    @BindView(R.id.balance) TextView balance;
+    @BindView(R.id.textView2) TextView curVal;
+    @BindView(R.id.textView3) TextView curbNum;
     private TextView mResponseTv;
     private APIService mAPIService;
     ArrayAdapter<String> adapter;
     ArrayList<String> list;
-
+    SharedPreferences mDefaultPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mDefaultPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        named.setText(mDefaultPreferences.getString(getResources().getString(R.string.current_name), "Your Name"));
 
         list = new ArrayList<String>();
-        for(Ticket ticket: Ticket.values()){
-        list.add(ticket.mCompanyName);
-        }
+        list.add("AAPL");
+        list.add("MSFT");
+        list.add("GOOGL");
+        list.add("TSLA");
+
         adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, list);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -70,12 +82,14 @@ public class MainActivity extends Activity {
         Timer timer = new Timer();
         TimerTask updateBall = new UpdateBallTask();
         timer. schedule(updateBall, 0, 2500);
+
+
     }
 
     @OnItemSelected(R.id.spinner1)
     void onItemSelected(int position) {
         Log.wtf("POSITION",position+"");
-        ticketed.setText(Ticket.values()[position].mStockName);
+        ticketed.setText(list.get(position));
     }
 
     @OnClick (R.id.btn_submit)
@@ -87,9 +101,9 @@ public class MainActivity extends Activity {
         }
     }
 
-    @OnClick (R.id.btn_av_funds)
-    public void btn_av_funds(View view){
-        sendPostAvFunds();
+    @OnClick(R.id.signout)
+    public void signout(View view){
+        this.startActivity(new Intent(this, LaunchActivity.class));
     }
 
     @OnClick (R.id.btn_st_funds)
@@ -98,14 +112,6 @@ public class MainActivity extends Activity {
         if(!TextUtils.isEmpty(amount)) {
         setPost(amount);}
 
-    }
-
-    @OnClick (R.id.btn_st_data)
-    public void btn_st_data(View view){
-        String stockName = titleEt.getText().toString().trim();
-
-        if(!TextUtils.isEmpty(stockName)) {
-        curNum(stockName);}
     }
 
     @OnClick (R.id.btn_buy)
@@ -117,19 +123,28 @@ public class MainActivity extends Activity {
         }
     }
 
-    @OnClick (R.id.btn_can_buy)
-    public void btn_can_buy(View view){
-        adapter.add("BANANA");
-        adapter.notifyDataSetChanged();
-        String stockName = titleEt.getText().toString().trim();
-        String amount = bodyEt.getText().toString().trim();
-        if(!TextUtils.isEmpty(stockName) && !TextUtils.isEmpty(amount)) {
-            canBuyPost(stockName, amount);
-        }
-    }
-
 
     public void curNum(String stockName) {
+        Log.wtf("SET","Data");
+
+        mAPIService.curNum(new FooRequestNet(stockName)).enqueue(new Callback<Post>() {
+            @Override
+            public void onResponse(Call<Post> call, Response<Post> response) {
+
+                if(response.isSuccessful()){
+                    //curbNum.setText("Stocks owned: "+response.body().toString());
+                    curbNum.setText("Stocks owned:" + 4);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Post> call, Throwable t) {
+                Log.e(TAG, "Unable to submit post to API set.");
+            }
+        });
+    }
+
+    public void curPrice(String stockName) {
         Log.wtf("SET","Data");
 
         mAPIService.curPrice(new FooRequestNet(stockName)).enqueue(new Callback<Post>() {
@@ -137,8 +152,56 @@ public class MainActivity extends Activity {
             public void onResponse(Call<Post> call, Response<Post> response) {
 
                 if(response.isSuccessful()){
-                    showResponse(response.body().toString());
-                    Log.i(TAG, "post submitted to API set." + response.body().toString());
+                    curVal.setText("Each Stock's value: $"+Math.round(Float.parseFloat(response.body().toString())));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Post> call, Throwable t) {
+                Log.e(TAG, "Unable to submit post to API set.");
+            }
+        });
+    }
+
+    public void val() {
+        Log.wtf("SET","Data");
+
+        mAPIService.val(new FooRequestNet("NO")).enqueue(new Callback<Post>() {
+            @Override
+            public void onResponse(Call<Post> call, Response<Post> response) {
+
+                if(response.isSuccessful()){
+                    balance.setText("Portfolio: $" + Math.round(Float.parseFloat(response.body().toString())));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Post> call, Throwable t) {
+                Log.e(TAG, "Unable to submit post to API set.");
+            }
+        });
+    }
+
+    public void last() {
+        Log.wtf("SET","Data");
+
+        mAPIService.last(new FooRequestNet("NO")).enqueue(new Callback<Post>() {
+            @Override
+            public void onResponse(Call<Post> call, Response<Post> response) {
+
+                if(response.isSuccessful()){
+                    boolean newone = true;
+                    for(String string : list){
+                        if(response.body().toString().equals(string)){
+                            newone=false;
+                        }
+                    }
+                    if(newone){
+                    list.add(response.body().toString());
+                    adapter.add(response.body().toString());
+                    adapter.notifyDataSetChanged();
+
+                    }
                 }
             }
 
@@ -177,7 +240,7 @@ public class MainActivity extends Activity {
                 if(response.isSuccessful()) {
                     //showResponse(response.body().toString());
                     //Log.i(TAG, "post submitted to API av." + response.body().toString());
-                    mTextView.setText(response.body().toString());
+                    mTextView.setText("Available Funds: $"+Math.round(Float.parseFloat(response.body().toString())));
                 }
             }
 
@@ -252,29 +315,14 @@ public class MainActivity extends Activity {
         mResponseTv.setText(response);
     }
 
-    @OnClick(R.id.requestO)
-    public void requestO(View view) {
-    }
-
     class UpdateBallTask extends TimerTask {
 
         public void run() {
             sendPostAvFunds();
-        }
-    }
-
-    private enum Ticket {
-        APPLE("AAPL", "Apple"),
-        TESLA("TSLA", "Tesla"),
-        MICROSOFT("MSFT", "Microsoft"),
-        GOOGLE("GOOGL", "Google");
-
-        public final String mStockName;
-        public final String mCompanyName;
-
-        Ticket(String companyName, String stockName) {
-            mCompanyName = companyName;
-            mStockName = stockName;
+            val();
+            last();
+            curPrice(list.get(spinner.getSelectedItemPosition()));
+            curNum(list.get(spinner.getSelectedItemPosition()));
         }
     }
 }
