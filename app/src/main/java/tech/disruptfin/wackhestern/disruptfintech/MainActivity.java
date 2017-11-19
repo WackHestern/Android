@@ -11,7 +11,14 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,6 +36,9 @@ public class MainActivity extends Activity {
     @BindView(R.id.et_body) EditText bodyEt;
     private TextView mResponseTv;
     private APIService mAPIService;
+    private APIData mAPIData;
+    ArrayAdapter<String> adapter;
+    ArrayList<String> list;
 
 
     @Override
@@ -36,13 +46,12 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        ArrayAdapter<String> adapter;
-        ArrayList<String> list;
+
 
         list = new ArrayList<String>();
-        for(String string:getResources().getStringArray(R.array.country_arrays)){
-            list.add(string);
-        }
+        //for(String string:getResources().getStringArray(R.array.country_arrays)){
+        //    list.add(string);
+        //}
         adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, list);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -52,12 +61,13 @@ public class MainActivity extends Activity {
         mResponseTv = (TextView) findViewById(R.id.tv_response);
 
         mAPIService = ApiUtils.getAPIService();
-    }
+        mAPIData = ApiUtils.getAPIData();
 
-    @Override
-    protected void onStart(){
-        super.onStart();
 
+
+        Timer timer = new Timer();
+        TimerTask updateBall = new UpdateBallTask();
+        timer. schedule(updateBall, 0, 2500);
     }
 
     @OnClick (R.id.btn_submit)
@@ -98,6 +108,8 @@ public class MainActivity extends Activity {
 
     @OnClick (R.id.btn_can_buy)
     public void btn_can_buy(View view){
+        adapter.add("BANANA");
+        adapter.notifyDataSetChanged();
         String stockName = titleEt.getText().toString().trim();
         String amount = bodyEt.getText().toString().trim();
         if(!TextUtils.isEmpty(stockName) && !TextUtils.isEmpty(amount)) {
@@ -107,18 +119,19 @@ public class MainActivity extends Activity {
 
     public void setData() {
         Log.wtf("SET","Data");
-        mAPIService.setData(new FooRequest("78","TSLA")).enqueue(new Callback<Post>() {
+        mAPIData.setData(new FooRequest("NOT","VALID")).enqueue(new Callback<List<SponsorsResult>>() {
             @Override
-            public void onResponse(Call<Post> call, Response<Post> response) {
+            public void onResponse(Call<List<SponsorsResult>> call, Response<List<SponsorsResult>> response) {
 
                 if(response.isSuccessful()) {
-                    showResponse(response.body().toString());
+                    List<SponsorsResult> rs = response.body();
+                    showResponse(rs.toString());
                     Log.i(TAG, "post submitted to API set." + response.body().toString());
                 }
             }
 
             @Override
-            public void onFailure(Call<Post> call, Throwable t) {
+            public void onFailure(Call<List<SponsorsResult>> call, Throwable t) {
                 Log.e(TAG, "Unable to submit post to AP setI.");
             }
         });
@@ -152,6 +165,7 @@ public class MainActivity extends Activity {
                 if(response.isSuccessful()) {
                     showResponse(response.body().toString());
                     Log.i(TAG, "post submitted to API av." + response.body().toString());
+                    mTextView.setText(response.body().toString());
                 }
             }
 
@@ -228,6 +242,13 @@ public class MainActivity extends Activity {
 
     @OnClick(R.id.requestO)
     public void requestO(View view) {
+    }
+
+    class UpdateBallTask extends TimerTask {
+
+        public void run() {
+            sendPostAvFunds();
+        }
     }
 }
 
