@@ -22,7 +22,6 @@ public class Post {
 
     @Override
     public String toString() {
-        Log.wtf("Message",message);
         return ""+message;
     }
 }

@@ -28,4 +28,12 @@ public interface APIService {
     @POST("/stocks/canbuy")
     @Headers(HerokuHeader.REPLACEMENT_HEADER)
     Call<Post> canBuyPost(@Body FooRequest body);
+
+    @POST("/stocks/numOwned")
+    @Headers(HerokuHeader.REPLACEMENT_HEADER)
+    Call<Post> curNum(@Body FooRequestNet body);
+
+    @POST("/stocks/price")
+    @Headers(HerokuHeader.REPLACEMENT_HEADER)
+    Call<Post> curPrice(@Body FooRequestNet body);
 }
