@@ -29,7 +29,7 @@ public interface APIService {
     @Headers(HerokuHeader.REPLACEMENT_HEADER)
     Call<Post> canBuyPost(@Body FooRequest body);
 
-    @POST("/stocks/numOwned")
+    @POST("/stocks/numowned")
     @Headers(HerokuHeader.REPLACEMENT_HEADER)
     Call<Post> curNum(@Body FooRequestNet body);
 
