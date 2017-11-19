@@ -25,6 +25,8 @@ import static android.content.ContentValues.TAG;
 public class MainActivity extends Activity {
     @BindView(R.id.spinner1) Spinner spinner;
     @BindView(R.id.textO) TextView mTextView;
+    @BindView(R.id.et_title) EditText titleEt;
+    @BindView(R.id.et_body) EditText bodyEt;
     private TextView mResponseTv;
     private APIService mAPIService;
 
@@ -46,27 +48,22 @@ public class MainActivity extends Activity {
         spinner.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
-
-        final EditText titleEt = (EditText) findViewById(R.id.et_title);
-        final EditText bodyEt = (EditText) findViewById(R.id.et_body);
         Button submitBtn = (Button) findViewById(R.id.btn_submit);
         mResponseTv = (TextView) findViewById(R.id.tv_response);
 
         mAPIService = ApiUtils.getAPIService();
-
-        submitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String stockName = titleEt.getText().toString().trim();
-                String amount = bodyEt.getText().toString().trim();
-                if(!TextUtils.isEmpty(stockName) && !TextUtils.isEmpty(amount)) {
-                    sendPost(stockName, amount);
-                }
-            }
-        });
     }
 
-    public void sendPost(String stockName, String amount) {
+    @OnClick (R.id.btn_submit)
+    public void btn_submit(View view){
+        String stockName = titleEt.getText().toString().trim();
+        String amount = bodyEt.getText().toString().trim();
+        if(!TextUtils.isEmpty(stockName) && !TextUtils.isEmpty(amount)) {
+            sendPostSell(stockName, amount);
+        }
+    }
+
+    public void sendPostSell(String stockName, String amount) {
         Log.wtf("Stockname",""+stockName);
         mAPIService.savePost(new FooRequest(amount, stockName)).enqueue(new Callback<Post>() {
             @Override
