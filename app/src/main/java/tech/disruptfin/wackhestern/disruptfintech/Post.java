@@ -20,8 +20,6 @@ public class Post {
 
     @Override
     public String toString() {
-        return "Post{" +
-                "message='" + message + '\'' +
-                '}';
+        return message.toString();
     }
 }
