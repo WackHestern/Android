@@ -23,10 +23,8 @@ import retrofit2.Response;
 import static android.content.ContentValues.TAG;
 
 public class MainActivity extends Activity {
-    @BindView(R.id.spinner1)
-    Spinner spinner;
-    @BindView(R.id.textO)
-    TextView mTextView;
+    @BindView(R.id.spinner1) Spinner spinner;
+    @BindView(R.id.textO) TextView mTextView;
     private TextView mResponseTv;
     private APIService mAPIService;
 
@@ -36,7 +34,6 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        //spinner = (Spinner) findViewById(R.id.spinner1);
         ArrayAdapter<String> adapter;
         ArrayList<String> list;
 
@@ -46,7 +43,6 @@ public class MainActivity extends Activity {
         }
         adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, list);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //adapter.add(list.get(0));
         spinner.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
@@ -71,7 +67,8 @@ public class MainActivity extends Activity {
     }
 
     public void sendPost(String stockName, String amount) {
-        mAPIService.savePost(stockName, amount).enqueue(new Callback<Post>() {
+        Log.wtf("Stockname",""+stockName);
+        mAPIService.savePost(new FooRequest(amount, stockName)).enqueue(new Callback<Post>() {
             @Override
             public void onResponse(Call<Post> call, Response<Post> response) {
 

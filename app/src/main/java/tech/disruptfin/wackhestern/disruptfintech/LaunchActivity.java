@@ -15,11 +15,7 @@ import butterknife.OnClick;
 
 public class LaunchActivity extends AppCompatActivity {
 
-    private static final int INCREMENTVALUE = 1;
-   // @BindView(R.id.progessBar)
-   // ProgressBar mProgessBar;
-    @BindView(R.id.button)
-    Button mButton;
+    @BindView(R.id.button) Button mButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,17 +27,7 @@ public class LaunchActivity extends AppCompatActivity {
     @Override
     protected void onStart(){
         super.onStart();
-        new CountDownTimer(4000, 20) {
-            public void onTick(long millisUntilFinished) {
-             //   mProgessBar.incrementProgressBy(INCREMENTVALUE);
-            }
 
-            public void onFinish() {
-              //  mProgessBar.setProgress(100);
-               // mProgessBar.setVisibility(View.INVISIBLE);
-                mButton.setVisibility(View.VISIBLE);
-            }
-        }.start();
     }
 
     @OnClick(R.id.button)
