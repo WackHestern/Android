@@ -7,53 +7,38 @@
     android:background="@color/colorAccent"
     tools:context="tech.disruptfin.wackhestern.disruptfintech.MainActivity">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/tradium"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:id="@+id/linearLayout2">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/tradium"
-        android:textSize="30dp"
-        android:textColor="@color/colorPrimary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_alignBottom="@+id/imageView"
-        android:layout_toRightOf="@+id/imageView"
-        android:layout_toEndOf="@+id/imageView"
-        android:id="@+id/textView" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tradium"
+            android:textSize="30dp"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_alignBottom="@+id/image4View"
+            android:layout_toRightOf="@+id/image4View"
+            android:layout_toEndOf="@+id/image4View"
+            android:id="@+id/textView" />
 
-    <Spinner
-        android:id="@+id/spinner1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/colorPrimary"
-        android:layout_marginRight="38dp"
-        android:layout_marginEnd="38dp"
-        android:layout_below="@+id/rl"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="72dp" />
+        <TextView
+            android:id="@+id/name"
+            android:textSize="20sp"
+            android:layout_marginLeft="15sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
+            android:text="First Last"
+            android:layout_marginRight="5sp"/>
 
-    <TextView
-        android:id="@+id/textO"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Name"
-        android:textColor="@color/colorPrimary"
-        android:layout_alignBottom="@+id/textView"
-        android:layout_toLeftOf="@+id/spinner1"
-        android:layout_toStartOf="@+id/spinner1"
-        android:layout_marginRight="34dp"
-        android:layout_marginEnd="34dp" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/signout"
@@ -64,56 +49,57 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
-    <TextView
-        android:id="@+id/name"
-        android:textSize="20sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorPrimary"
-        android:text="First Last"
-        android:layout_marginRight="5sp"
-        android:layout_toLeftOf="@id/signout"/>
 
-    <Button
-        android:id="@+id/requestO"
+    <Spinner
+        android:id="@+id/spinner1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/textView"
-        android:text="HI"
-        android:textColor="@color/colorAccent"
         android:backgroundTint="@color/colorPrimary"
-        android:layout_toEndOf="@+id/textView" />
+        android:layout_below="@+id/linearLayout"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:id="@+id/textO"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="Name"
+        android:textColor="@color/colorPrimary"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
 
     <EditText
         android:id="@+id/et_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="bigtitle"
+        android:hint="Company Ticker (i.e. AAPL)"
         android:background="@color/colorPrimary"
-        android:layout_below="@+id/imageView"
-        android:layout_toRightOf="@+id/tv_response"
-        android:layout_toEndOf="@+id/tv_response"
-        android:layout_marginTop="61dp" />
-
+        android:layout_above="@+id/et_body"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="17dp" />
     <EditText
         android:id="@+id/et_body"
         android:lines="4"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="bighint"
+        android:layout_height="20sp"
+        android:hint="Amount in dollars $"
         android:background="@color/colorPrimary"
         android:digits="0123456789"
-        android:layout_below="@+id/et_title"
+        android:layout_above="@+id/rl"
         android:layout_toRightOf="@+id/tv_response"
-        android:layout_toEndOf="@+id/tv_response" />
+        android:layout_toEndOf="@+id/tv_response"
+        android:layout_marginBottom="18dp"/>
 <RelativeLayout
     android:id="@+id/rl"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_centerVertical="true"
-    android:layout_toRightOf="@+id/tv_response"
-    android:layout_toEndOf="@+id/tv_response">
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true">
     <Button
         android:id="@+id/btn_submit"
         android:layout_width="wrap_content"
@@ -123,15 +109,14 @@
         android:text="Sell" />
 
     <Button
-        android:id="@+id/btn_av_funds"
+        android:id="@+id/btn_buy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:textColor="@android:color/white"
-        android:text="AVFunds"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/btn_st_funds"
-        android:layout_toEndOf="@+id/btn_st_funds" />
+        android:text="BUY"
+        android:layout_marginLeft="10sp"
+        android:layout_toRightOf="@id/btn_submit"/>
 
     <Button
         android:id="@+id/btn_st_funds"
@@ -139,55 +124,32 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:textColor="@android:color/white"
-        android:text="STFunds"
+        android:text="Set Funds"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/btn_submit"
-        android:layout_toEndOf="@+id/btn_submit" />
 
-    <Button
-        android:id="@+id/btn_st_data"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:textColor="@android:color/white"
-        android:text="CuPri"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/btn_av_funds"/>
+        android:layout_alignParentRight="true"/>/>
 
-    <Button
-        android:id="@+id/btn_buy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:textColor="@android:color/white"
-        android:text="BUY"
-        android:layout_alignParentTop="false"
-        android:layout_below="@+id/btn_av_funds"/>
 
-    <Button
-        android:id="@+id/btn_can_buy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:textColor="@android:color/white"
-        android:text="CanBuy"
-        android:layout_alignParentTop="false"
-        android:layout_below="@id/btn_st_funds"
-        android:layout_toRightOf="@+id/btn_buy"/>
+</RelativeLayout>
 
-    <TextView
-        android:id="@+id/ticket"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="109dp"
-        android:gravity="center_horizontal"
-        android:text="bigenter"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        android:textColor="@color/colorPrimary"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-</RelativeLayout>
+        android:layout_below="@id/rl"
+        android:id="@+id/linearLayout">
+        <TextView
+            android:id="@+id/ticket"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="bigenter"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginTop="20sp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tv_response"
@@ -198,6 +160,47 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/rl"/>
+
+    <TextView
+        android:id="@+id/balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/linearLayout2"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1"
+        android:text="xxxx"
+        android:textColor="@color/colorPrimary" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:textColor="@color/colorPrimary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spinner1"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:textColor="@color/colorPrimary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_alignStart="@+id/textView2"
+        android:layout_below="@+id/textView2"
+        android:layout_marginTop="15dp"
+        android:text="Number of stocks: 4" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimary"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:text="Created Nov 2017" />
 
 
 </RelativeLayout>

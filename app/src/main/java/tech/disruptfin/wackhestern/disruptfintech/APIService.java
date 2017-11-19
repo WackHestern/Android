@@ -36,4 +36,13 @@ public interface APIService {
     @POST("/stocks/price")
     @Headers(HerokuHeader.REPLACEMENT_HEADER)
     Call<Post> curPrice(@Body FooRequestNet body);
+
+
+    @POST("/stocks/portfoliovalue")
+    @Headers(HerokuHeader.REPLACEMENT_HEADER)
+    Call<Post> val(@Body FooRequestNet body);
+
+    @POST("/stocks/lastadded")
+    @Headers(HerokuHeader.REPLACEMENT_HEADER)
+    Call<Post> last(@Body FooRequestNet body);
 }
