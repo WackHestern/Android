@@ -63,6 +63,118 @@ public class MainActivity extends Activity {
         }
     }
 
+    @OnClick (R.id.btn_av_funds)
+    public void btn_av_funds(View view){
+        sendPostAvFunds();
+    }
+
+    @OnClick (R.id.btn_st_funds)
+    public void btn_st_funds(View view){
+        String amount = bodyEt.getText().toString().trim();
+        if(!TextUtils.isEmpty(amount)) {
+        setPost(amount);}
+
+    }
+
+    @OnClick (R.id.btn_st_data)
+    public void btn_st_data(View view){
+        setData();
+    }
+
+    @OnClick (R.id.btn_buy)
+    public void btn_buy(View view){
+        String stockName = titleEt.getText().toString().trim();
+        String amount = bodyEt.getText().toString().trim();
+        if(!TextUtils.isEmpty(stockName) && !TextUtils.isEmpty(amount)) {
+            buyPost(stockName, amount);
+        }
+    }
+
+    @OnClick (R.id.btn_can_buy)
+    public void btn_can_buy(View view){
+        String stockName = titleEt.getText().toString().trim();
+        String amount = bodyEt.getText().toString().trim();
+        if(!TextUtils.isEmpty(stockName) && !TextUtils.isEmpty(amount)) {
+            canBuyPost(stockName, amount);
+        }
+    }
+
+    public void setData() {
+        Log.wtf("SET","Data");
+        mAPIService.setData(new FooRequest("NOT","VALID")).enqueue(new Callback<Post>() {
+            @Override
+            public void onResponse(Call<Post> call, Response<Post> response) {
+
+                if(response.isSuccessful()) {
+                    showResponse(response.body().toString());
+                    Log.i(TAG, "post submitted to API set." + response.body().toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Post> call, Throwable t) {
+                Log.e(TAG, "Unable to submit post to AP setI.");
+            }
+        });
+    }
+
+    public void buyPost(String stockName, String amount) {
+        Log.wtf("SET","Data");
+        mAPIService.buyPost(new FooRequest(amount, stockName)).enqueue(new Callback<Post>() {
+            @Override
+            public void onResponse(Call<Post> call, Response<Post> response) {
+
+                if(response.isSuccessful()) {
+                    showResponse(response.body().toString());
+                    Log.i(TAG, "post submitted to API set." + response.body().toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Post> call, Throwable t) {
+                Log.e(TAG, "Unable to submit post to AP setI.");
+            }
+        });
+    }
+
+    public void canBuyPost(String stockName, String amount) {
+        Log.wtf("SET","Data");
+        mAPIService.canBuyPost(new FooRequest(amount, stockName)).enqueue(new Callback<Post>() {
+            @Override
+            public void onResponse(Call<Post> call, Response<Post> response) {
+
+                if(response.isSuccessful()) {
+                    showResponse(response.body().toString());
+                    Log.i(TAG, "post submitted to API set." + response.body().toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Post> call, Throwable t) {
+                Log.e(TAG, "Unable to submit post to AP setI.");
+            }
+        });
+    }
+
+    public void sendPostAvFunds() {
+        Log.wtf("AV","FUNDS");
+        mAPIService.avFund(new FooRequest("NOT","VALID")).enqueue(new Callback<Post>() {
+            @Override
+            public void onResponse(Call<Post> call, Response<Post> response) {
+
+                if(response.isSuccessful()) {
+                    showResponse(response.body().toString());
+                    Log.i(TAG, "post submitted to API av." + response.body().toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Post> call, Throwable t) {
+                Log.e(TAG, "Unable to submit post to API av.");
+            }
+        });
+    }
+
     public void sendPostSell(String stockName, String amount) {
         Log.wtf("Stockname",""+stockName);
         mAPIService.savePost(new FooRequest(amount, stockName)).enqueue(new Callback<Post>() {
@@ -78,6 +190,25 @@ public class MainActivity extends Activity {
             @Override
             public void onFailure(Call<Post> call, Throwable t) {
                 Log.e(TAG, "Unable to submit post to API.");
+            }
+        });
+    }
+
+    public void setPost(String amount) {
+        Log.wtf("SET","FUNDS");
+        mAPIService.setPost(new FooRequestSet(amount)).enqueue(new Callback<Post>() {
+            @Override
+            public void onResponse(Call<Post> call, Response<Post> response) {
+
+                if(response.isSuccessful()) {
+                    showResponse(response.body().toString());
+                    Log.i(TAG, "post submitted to API set." + response.body().toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Post> call, Throwable t) {
+                Log.e(TAG, "Unable to submit post to AP setI.");
             }
         });
     }
