@@ -21,11 +21,6 @@ public interface APIService {
     @Headers(HerokuHeader.REPLACEMENT_HEADER)
     Call<Post> avFund(@Body FooRequest body);
 
-    @POST("/stocks/data")
-    @Headers(HerokuHeader.REPLACEMENT_HEADER)
-    Call<Post> setData(@Body FooRequest body);
-
-
     @POST("/stocks/buy")
     @Headers(HerokuHeader.REPLACEMENT_HEADER)
     Call<Post> buyPost(@Body FooRequest body);

@@ -10,4 +10,9 @@ public class ApiUtils {
 
         return RetrofitClient.getClient(BASE_URL).create(APIService.class);
     }
+
+    public static APIData getAPIData() {
+
+        return RetrofitClient.getClient(BASE_URL).create(APIData.class);
+    }
 }
