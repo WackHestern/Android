@@ -34,9 +34,13 @@
         android:id="@+id/spinner1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textO"
-        android:layout_centerHorizontal="true"
-        android:backgroundTint="@color/colorPrimary"/>
+        android:backgroundTint="@color/colorPrimary"
+        android:layout_marginRight="38dp"
+        android:layout_marginEnd="38dp"
+        android:layout_below="@+id/rl"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="72dp" />
 
     <TextView
         android:id="@+id/textO"
@@ -44,10 +48,31 @@
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:text="Name"
-        android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="35dp"
-        android:textColor="@color/colorPrimary"/>
+        android:textColor="@color/colorPrimary"
+        android:layout_alignBottom="@+id/textView"
+        android:layout_toLeftOf="@+id/spinner1"
+        android:layout_toStartOf="@+id/spinner1"
+        android:layout_marginRight="34dp"
+        android:layout_marginEnd="34dp" />
+
+    <TextView
+        android:id="@+id/signout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimary"
+        android:text="Sign Out"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:id="@+id/name"
+        android:textSize="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimary"
+        android:text="First Last"
+        android:layout_marginRight="5sp"
+        android:layout_toLeftOf="@id/signout"/>
 
     <Button
         android:id="@+id/requestO"
@@ -60,46 +85,35 @@
         android:backgroundTint="@color/colorPrimary"
         android:layout_toEndOf="@+id/textView" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        android:text="bigenter"
-        android:textColor="@color/colorPrimary"
-        android:layout_below="@+id/spinner1"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="15dp" />
     <EditText
         android:id="@+id/et_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="bigtitle"
         android:background="@color/colorPrimary"
-        android:layout_above="@+id/et_body"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_below="@+id/imageView"
+        android:layout_toRightOf="@+id/tv_response"
+        android:layout_toEndOf="@+id/tv_response"
+        android:layout_marginTop="61dp" />
 
     <EditText
-        android:layout_marginTop="5sp"
         android:id="@+id/et_body"
         android:lines="4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="bighint"
         android:background="@color/colorPrimary"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:digits="0123456789"/>
+        android:digits="0123456789"
+        android:layout_below="@+id/et_title"
+        android:layout_toRightOf="@+id/tv_response"
+        android:layout_toEndOf="@+id/tv_response" />
 <RelativeLayout
     android:id="@+id/rl"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_centerHorizontal="true"
-    android:layout_below="@+id/et_body"
-    android:layout_marginTop="5sp">
+    android:layout_centerVertical="true"
+    android:layout_toRightOf="@+id/tv_response"
+    android:layout_toEndOf="@+id/tv_response">
     <Button
         android:id="@+id/btn_submit"
         android:layout_width="wrap_content"
@@ -136,7 +150,7 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:textColor="@android:color/white"
-        android:text="STData"
+        android:text="CuPri"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/btn_av_funds"/>
 
@@ -160,6 +174,19 @@
         android:layout_alignParentTop="false"
         android:layout_below="@id/btn_st_funds"
         android:layout_toRightOf="@+id/btn_buy"/>
+
+    <TextView
+        android:id="@+id/ticket"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="109dp"
+        android:gravity="center_horizontal"
+        android:text="bigenter"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textColor="@color/colorPrimary"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>
 
     <TextView
