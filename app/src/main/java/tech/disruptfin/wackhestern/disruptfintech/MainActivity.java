@@ -132,8 +132,8 @@ public class MainActivity extends Activity {
             public void onResponse(Call<Post> call, Response<Post> response) {
 
                 if(response.isSuccessful()){
-                    //curbNum.setText("Stocks owned: "+response.body().toString());
-                    curbNum.setText("Stocks owned:" + 4);
+                    curbNum.setText("Stocks owned: "+response.body().toString());
+
                 }
             }
 
